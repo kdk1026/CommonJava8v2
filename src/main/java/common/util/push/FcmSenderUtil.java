@@ -71,7 +71,7 @@ public class FcmSenderUtil {
 		}
     }
 
-	private boolean sendPush(String token, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
+	private boolean sendPush(String token, String title, String body, String imageUrl, Map<String, String> data) {
 		if ( StringUtils.isBlank(token) ) {
 			throw new IllegalArgumentException("token is null");
 		}
@@ -104,7 +104,7 @@ public class FcmSenderUtil {
 		}
 	}
 
-	private boolean sendPushEach(List<String> tokens, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
+	private boolean sendPushEach(List<String> tokens, String title, String body, String imageUrl, Map<String, String> data) {
 		if ( tokens == null || tokens.isEmpty() ) {
 			throw new IllegalArgumentException("tokens is null");
 		}
@@ -143,7 +143,7 @@ public class FcmSenderUtil {
 		}
 	}
 
-	private boolean sendTopicMessage(String topic, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
+	private boolean sendTopicMessage(String topic, String title, String body, String imageUrl, Map<String, String> data) {
 		if ( StringUtils.isBlank(topic) ) {
 			throw new IllegalArgumentException("topic is null");
 		}
