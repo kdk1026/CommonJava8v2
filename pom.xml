@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>CommonJava8v2</groupId>
+  <artifactId>CommonJava8v2</artifactId>
+  <version>0.1</version>
+
+  <dependencies>
+	<!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
+	<dependency>
+	    <groupId>com.google.firebase</groupId>
+	    <artifactId>firebase-admin</artifactId>
+	    <version>9.4.3</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-api</artifactId>
+	    <version>5.13.0-M3</version>
+	    <scope>test</scope>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-text</artifactId>
+	    <version>1.13.1</version>
+	</dependency>
+  </dependencies>
+
+</project>
