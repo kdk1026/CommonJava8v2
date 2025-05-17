@@ -43,10 +43,10 @@ public class FcmSenderUtil {
 
 	private static synchronized FcmSenderUtil getInstance(String serviceAccountKeyJsonPath) throws IOException {
         if (instance == null) {
-            instance = new FcmSenderUtil();
-            instance.initialize(serviceAccountKeyJsonPath);
+			instance = new FcmSenderUtil();
+			instance.initialize(serviceAccountKeyJsonPath);
         } else if (instance.firebaseMessaging == null) {
-            instance.initialize(serviceAccountKeyJsonPath);
+        	instance.initialize(serviceAccountKeyJsonPath);
         }
 
         return instance;
@@ -66,9 +66,7 @@ public class FcmSenderUtil {
 				FirebaseApp app = FirebaseApp.initializeApp(options);
 				firebaseMessaging = FirebaseMessaging.getInstance(app);
 			}
-		}
-
-		if (firebaseMessaging == null) {
+		} else {
 			firebaseMessaging = FirebaseMessaging.getInstance();
 		}
     }
@@ -101,7 +99,7 @@ public class FcmSenderUtil {
 			logger.debug("푸시 알림 전송 성공: {}", response);
 			return true;
 		} catch (Exception e) {
-			logger.error("", e);
+			logger.error("푸시 알림 전송 실패", e);
 			return false;
 		}
 	}
@@ -140,7 +138,7 @@ public class FcmSenderUtil {
 			logger.debug("푸시 알림 전송 성공: {}", response.getSuccessCount());
 			return true;
 		} catch (Exception e) {
-			logger.error("", e);
+			logger.error("푸시 알림 전송 실패", e);
 			return false;
 		}
 	}
@@ -169,7 +167,7 @@ public class FcmSenderUtil {
                 .build();
 
         try {
-            String response = FirebaseMessaging.getInstance().send(message);
+            String response = firebaseMessaging.send(message);
             logger.info("토픽 메시지 전송 성공: {}", response);
             return true;
         } catch (Exception e) {
@@ -179,10 +177,6 @@ public class FcmSenderUtil {
 	}
 
 	public static class PushSingle {
-		private PushSingle() {
-			super();
-		}
-
 		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
 			return instance.sendPush(token, title, body, null, null);
@@ -213,10 +207,6 @@ public class FcmSenderUtil {
 	}
 
 	public static class PushEch {
-		private PushEch() {
-			super();
-		}
-
 		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
 			return instance.sendPushEach(tokens, title, body, null, null);
@@ -247,10 +237,6 @@ public class FcmSenderUtil {
 	}
 
 	public static class PushTopic {
-		private PushTopic() {
-			super();
-		}
-
 		public static boolean subscribeToTopic(String serviceAccountKeyJsonPath, List<String> tokens, String topic) {
 			if ( tokens == null || tokens.isEmpty() ) {
 				throw new IllegalArgumentException("tokens is null");
