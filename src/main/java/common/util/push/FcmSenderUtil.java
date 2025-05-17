@@ -176,6 +176,11 @@ public class FcmSenderUtil {
         }
 	}
 
+	/**
+	 * <pre>
+	 * 푸시 알림 전송 (단일)
+	 * </pre>
+	 */
 	public static class PushSingle {
 		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
@@ -206,6 +211,13 @@ public class FcmSenderUtil {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * 푸시 알림 전송 (다수)
+	 *  - 500개 이상의 토큰을 전송할 경우, 500개씩 나누어 전송해야 함
+	 *  - 성능을 위해 PushTopic 사용 권장
+	 * </pre>
+	 */
 	public static class PushEch {
 		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
@@ -236,6 +248,15 @@ public class FcmSenderUtil {
 		}
 	}
 
+	/**
+	 * <pre>
+	 * 토픽 구독 및 푸시 알림 전송
+	 *  - 내용이 다른 푸시 알림을 연달아 보낼 수도 있으므로 다음 순서대로 호출하여 사용
+	 *  	1. 토픽 구독
+	 *  	2. 푸시 전송
+	 *  	3. 토픽 구독 취소
+	 * </pre>
+	 */
 	public static class PushTopic {
 		public static boolean subscribeToTopic(String serviceAccountKeyJsonPath, List<String> tokens, String topic) {
 			if ( tokens == null || tokens.isEmpty() ) {
