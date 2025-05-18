@@ -109,6 +109,10 @@ public class FcmSenderUtil {
 			throw new IllegalArgumentException("tokens is null");
 		}
 
+		if ( tokens.size() > 500 ) {
+			throw new IllegalArgumentException("tokens size is over 500");
+		}
+
 		if ( StringUtils.isBlank(title) ) {
 			throw new IllegalArgumentException("title is null");
 		}
