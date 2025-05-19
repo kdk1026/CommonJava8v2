@@ -30,7 +30,21 @@ public class JaxbXmlUtil {
 		super();
 	}
 
+	private static JaxbXmlUtil instance;
+	private JAXBContext jaxbContext;
+
 	private static final Logger logger = LoggerFactory.getLogger(JaxbXmlUtil.class);
+
+	private static synchronized <T> JaxbXmlUtil getInstance(Class<T> clazz) throws JAXBException {
+        if (instance == null) {
+			instance = new JaxbXmlUtil();
+			instance.jaxbContext = JAXBContext.newInstance(clazz);
+        } else {
+        	instance.jaxbContext = JAXBContext.newInstance(clazz);
+        }
+
+        return instance;
+    }
 
 	public static class ToXml {
 		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
@@ -39,8 +53,8 @@ public class JaxbXmlUtil {
 			}
 
 			try {
-				JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
-				Marshaller marshaller = jaxbContext.createMarshaller();
+				getInstance(obj.getClass());
+				Marshaller marshaller = instance.jaxbContext.createMarshaller();
 				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isPretty);
 
 				StringWriter writer = new StringWriter();
@@ -66,8 +80,8 @@ public class JaxbXmlUtil {
 			}
 
 			try {
-				JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
-				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+				getInstance(clazz);
+				Unmarshaller unmarshaller = instance.jaxbContext.createUnmarshaller();
 				return (T) unmarshaller.unmarshal(is);
 			} catch (JAXBException e) {
 				logger.error("", e);
@@ -89,8 +103,8 @@ public class JaxbXmlUtil {
 			}
 
 			try {
-				JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
-				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+				getInstance(clazz);
+				Unmarshaller unmarshaller = instance.jaxbContext.createUnmarshaller();
 				return (T) unmarshaller.unmarshal(file);
 			} catch (JAXBException e) {
 				logger.error("", e);
@@ -110,8 +124,8 @@ public class JaxbXmlUtil {
 			}
 
 			try {
-				JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
-				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+				getInstance(clazz);
+				Unmarshaller unmarshaller = instance.jaxbContext.createUnmarshaller();
 				return (T) unmarshaller.unmarshal(new File(fileName));
 			} catch (JAXBException e) {
 				logger.error("", e);
