@@ -151,5 +151,4 @@ public class JacksonXmlUtil {
 		}
 	}
 
-
 }
