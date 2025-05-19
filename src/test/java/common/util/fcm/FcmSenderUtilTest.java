@@ -1,4 +1,4 @@
-package common;
+package common.util.fcm;
 
 import java.io.IOException;
 import java.util.List;

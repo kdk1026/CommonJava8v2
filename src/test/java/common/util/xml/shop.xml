@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shop city="서울" type="마트">
+    <food>
+        <name>귤</name>
+        <sort>과일</sort>
+        <cost>3000</cost>
+    </food>
+    <food>
+        <name>상추</name>
+        <sort>야채</sort>
+        <cost>2000</cost>
+    </food>
+</shop>

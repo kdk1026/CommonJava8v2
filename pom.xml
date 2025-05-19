@@ -34,6 +34,35 @@
 	    <version>1.5.18</version>
 	    <scope>compile</scope>
 	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+	<dependency>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <version>1.18.38</version>
+	    <scope>provided</scope>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.dataformat</groupId>
+	    <artifactId>jackson-dataformat-xml</artifactId>
+	    <version>2.19.0</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
+	<dependency>
+	    <groupId>jakarta.xml.bind</groupId>
+	    <artifactId>jakarta.xml.bind-api</artifactId>
+	    <version>4.0.2</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+	<dependency>
+	    <groupId>org.glassfish.jaxb</groupId>
+	    <artifactId>jaxb-runtime</artifactId>
+	    <version>4.0.5</version>
+	</dependency>
   </dependencies>
 
 </project>

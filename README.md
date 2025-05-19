@@ -5,6 +5,7 @@
 **현재 기능:**
 
 * **FCM 푸시 전송:** Firebase Cloud Messaging (FCM)을 이용하여 푸시 알림을 전송하는 기능을 제공합니다.
+* **XML 처리:** Jackson Dataformat XML / JAXB API
 
 **안내:** `CommonJava8`에 의존하는 다른 라이브러리들과의 버전 충돌 가능성으로 인해, `CommonJava8v2` 라이브러리가 추가되었습니다.
 <br>
