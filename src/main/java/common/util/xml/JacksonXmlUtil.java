@@ -43,7 +43,7 @@ public class JacksonXmlUtil {
     }
 
 	public static class ToXml {
-		public static String converterObjToXmlStr(Object obj) {
+		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
 			if ( obj == null ) {
 				throw new IllegalArgumentException("obj is null");
 			}
@@ -52,10 +52,15 @@ public class JacksonXmlUtil {
 
 			try {
 				getInstance();
-				xmlStr = instance.xmlMapper.writeValueAsString(obj);
+				if (!isPretty) {
+					xmlStr = instance.xmlMapper.writeValueAsString(obj);
+				} else {
+					xmlStr = instance.xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+				}
 			} catch (Exception e) {
 				logger.error("", e);
 			}
+
 			return xmlStr;
 		}
 	}

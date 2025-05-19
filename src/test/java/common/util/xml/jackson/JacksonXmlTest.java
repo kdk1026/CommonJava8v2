@@ -51,7 +51,7 @@ public class JacksonXmlTest {
 
 		shop.setFood(list);
 
-		String xmlStr = JacksonXmlUtil.ToXml.converterObjToXmlStr(shop);
+		String xmlStr = JacksonXmlUtil.ToXml.converterObjToXmlStr(shop, true);
 		System.out.println(xmlStr);
 	}
 
