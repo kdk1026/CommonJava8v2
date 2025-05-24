@@ -18,10 +18,10 @@ import common.util.push.FcmSenderUtil;
  *
  * @author kdk
  */
-public class FcmSenderUtilTest {
+class FcmSenderUtilTest {
 
 //	@Test
-	public void 싱글_테스트() throws IOException {
+	void 싱글_테스트() throws IOException {
 		String serviceAccountKeyJsonPath = "d:/test/webpushtest-6bb7d-firebase-adminsdk-6qup9-58a2645a0a.json";
 		String token = "dHkWFfuRRCxg0tsbgg3RqR:APA91bGkuTJEGcq7BcVC5OEt_A7VbY9g_yFf_UUjRCBwHnVPdaartFVegwKMLqX8H_7P94ItEAqzeR9AcvV_6tQh7RuqtcjKHCkI-wAS1Yk1lfoB9cigU4U";
 
@@ -30,7 +30,7 @@ public class FcmSenderUtilTest {
 	}
 
 //	@Test
-	public void 멀티_테스트() throws IOException {
+	void 멀티_테스트() throws IOException {
 		String serviceAccountKeyJsonPath = "d:/test/webpushtest-6bb7d-firebase-adminsdk-6qup9-58a2645a0a.json";
 		String token = "dHkWFfuRRCxg0tsbgg3RqR:APA91bGkuTJEGcq7BcVC5OEt_A7VbY9g_yFf_UUjRCBwHnVPdaartFVegwKMLqX8H_7P94ItEAqzeR9AcvV_6tQh7RuqtcjKHCkI-wAS1Yk1lfoB9cigU4U";
 
@@ -41,7 +41,7 @@ public class FcmSenderUtilTest {
 	}
 
 	@Test
-	public void 토픽_테스트() throws IOException {
+	void 토픽_테스트() throws IOException {
 		String serviceAccountKeyJsonPath = "d:/test/webpushtest-6bb7d-firebase-adminsdk-6qup9-58a2645a0a.json";
 		String token = "dHkWFfuRRCxg0tsbgg3RqR:APA91bGkuTJEGcq7BcVC5OEt_A7VbY9g_yFf_UUjRCBwHnVPdaartFVegwKMLqX8H_7P94ItEAqzeR9AcvV_6tQh7RuqtcjKHCkI-wAS1Yk1lfoB9cigU4U";
 		String topic = "test_topic";

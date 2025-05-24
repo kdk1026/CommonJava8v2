@@ -20,10 +20,10 @@ import common.util.xml.JaxbXmlUtil;
  *
  * @author kdk
  */
-public class JaxbXmlTest {
+class JaxbXmlTest {
 
 //	@Test
-	public void 객체_변환_테스트() {
+	void 객체_변환_테스트() {
 		JaxbShop shop = new JaxbShop();
 		shop.setCity("서울");
 		shop.setType("한식");
@@ -51,7 +51,7 @@ public class JaxbXmlTest {
 	}
 
 //	@Test
-	public void 스트림_읽기_테스트() {
+	void 스트림_읽기_테스트() {
 		String xmlFilePath = "common/util/xml/shop.xml";
 
 		try ( InputStream is = this.getClass().getClassLoader().getResourceAsStream(xmlFilePath) ) {
@@ -65,7 +65,7 @@ public class JaxbXmlTest {
 	}
 
 	@Test
-	public void 파일_일기_테스트() {
+	void 파일_일기_테스트() {
 		String xmlFilePath = "common/util/xml/shop.xml";
 		File file = new File(this.getClass().getClassLoader().getResource(xmlFilePath).getFile());
 

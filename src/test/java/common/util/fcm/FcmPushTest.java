@@ -22,10 +22,10 @@ import com.google.firebase.messaging.Notification;
  *
  * @author kdk
  */
-public class FcmPushTest {
+class FcmPushTest {
 
 	@Test
-	public void test() {
+	void test() {
         try {
             // Firebase 초기화
             FileInputStream serviceAccount = new FileInputStream("d:/test/webpushtest-6bb7d-firebase-adminsdk-6qup9-58a2645a0a.json");

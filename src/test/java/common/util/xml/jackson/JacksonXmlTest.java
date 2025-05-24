@@ -25,10 +25,10 @@ import common.util.xml.JacksonXmlUtil;
  *
  * @author kdk
  */
-public class JacksonXmlTest {
+class JacksonXmlTest {
 
 //	@Test
-	public void 객체_변환_테스트() {
+	void 객체_변환_테스트() {
 		JacksonShop shop = new JacksonShop();
 		shop.setCity("서울");
 		shop.setType("한식");
@@ -56,7 +56,7 @@ public class JacksonXmlTest {
 	}
 
 //	@Test
-	public void 스트림_읽기_테스트() {
+	void 스트림_읽기_테스트() {
 		String xmlFilePath = "common/util/xml/shop.xml";
 
 		try ( InputStream is = this.getClass().getClassLoader().getResourceAsStream(xmlFilePath) ) {
@@ -70,7 +70,7 @@ public class JacksonXmlTest {
 	}
 
 //	@Test
-	public void 문자열_읽기_테스트() {
+	void 문자열_읽기_테스트() {
 		String xmlFilePath = "common/util/xml/shop.xml";
 		StringBuilder sb = new StringBuilder();
 
@@ -96,7 +96,7 @@ public class JacksonXmlTest {
 	}
 
 	@Test
-	public void 파일_일기_테스트() {
+	void 파일_일기_테스트() {
 		String xmlFilePath = "common/util/xml/shop.xml";
 		File file = new File(this.getClass().getClassLoader().getResource(xmlFilePath).getFile());
 
