@@ -47,6 +47,10 @@ public class JaxbXmlUtil {
     }
 
 	public static class ToXml {
+		private ToXml() {
+			super();
+		}
+
 		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
 			if ( obj == null ) {
 				throw new IllegalArgumentException("obj is null");
@@ -69,6 +73,10 @@ public class JaxbXmlUtil {
 	}
 
 	public static class FromXml {
+		private FromXml() {
+			super();
+		}
+
 		@SuppressWarnings("unchecked")
 		public static <T> T converterXmlStreamToClass(InputStream is, Class<T> clazz) {
 			if ( is == null ) {
@@ -92,6 +100,10 @@ public class JaxbXmlUtil {
 	}
 
 	public static class ReadXmlFile {
+		private ReadXmlFile() {
+			super();
+		}
+
 		@SuppressWarnings("unchecked")
 		public static <T> T convertXmlFileToObject(File file, Class<T> clazz) {
 			if ( file == null ) {

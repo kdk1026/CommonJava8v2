@@ -43,6 +43,10 @@ public class JacksonXmlUtil {
     }
 
 	public static class ToXml {
+		private ToXml() {
+			super();
+		}
+
 		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
 			if ( obj == null ) {
 				throw new IllegalArgumentException("obj is null");
@@ -66,6 +70,10 @@ public class JacksonXmlUtil {
 	}
 
 	public static class FromXml {
+		private FromXml() {
+			super();
+		}
+
 		public static <T> T converterXmlStrToClass(String xmlStr, Class<T> clazz) {
 			if ( StringUtils.isBlank(xmlStr) ) {
 				throw new IllegalArgumentException("xmlStr is null");
@@ -108,6 +116,10 @@ public class JacksonXmlUtil {
 	}
 
 	public static class ReadXmlFile {
+		private ReadXmlFile() {
+			super();
+		}
+
 		public static Object convertXmlFileToObject(File file, TypeReference<?> typeReference) {
 			if ( file == null ) {
 				throw new IllegalArgumentException("file is null");

@@ -186,6 +186,10 @@ public class FcmSenderUtil {
 	 * </pre>
 	 */
 	public static class PushSingle {
+		private PushSingle() {
+			super();
+		}
+
 		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
 			return instance.sendPush(token, title, body, null, null);
@@ -223,6 +227,10 @@ public class FcmSenderUtil {
 	 * </pre>
 	 */
 	public static class PushEch {
+		private PushEch() {
+			super();
+		}
+
 		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
 			return instance.sendPushEach(tokens, title, body, null, null);
@@ -262,6 +270,10 @@ public class FcmSenderUtil {
 	 * </pre>
 	 */
 	public static class PushTopic {
+		private PushTopic() {
+			super();
+		}
+
 		public static boolean subscribeToTopic(String serviceAccountKeyJsonPath, List<String> tokens, String topic) {
 			if ( tokens == null || tokens.isEmpty() ) {
 				throw new IllegalArgumentException("tokens is null");
