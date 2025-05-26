@@ -16,6 +16,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.BatchResponse;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 
@@ -98,7 +99,7 @@ public class FcmSenderUtil {
 			String response = firebaseMessaging.send(message);
 			logger.debug("푸시 알림 전송 성공: {}", response);
 			return true;
-		} catch (Exception e) {
+		} catch (FirebaseMessagingException e) {
 			logger.error("푸시 알림 전송 실패", e);
 			return false;
 		}
@@ -141,7 +142,7 @@ public class FcmSenderUtil {
 			BatchResponse response = firebaseMessaging.sendEach(messages);
 			logger.debug("푸시 알림 전송 성공: {}", response.getSuccessCount());
 			return true;
-		} catch (Exception e) {
+		} catch (FirebaseMessagingException e) {
 			logger.error("푸시 알림 전송 실패", e);
 			return false;
 		}
@@ -174,7 +175,7 @@ public class FcmSenderUtil {
             String response = firebaseMessaging.send(message);
             logger.info("토픽 메시지 전송 성공: {}", response);
             return true;
-        } catch (Exception e) {
+        } catch (FirebaseMessagingException e) {
             logger.error("토픽 메시지 전송 실패", e);
             return false;
         }
@@ -288,7 +289,7 @@ public class FcmSenderUtil {
 	        	instance.firebaseMessaging.subscribeToTopic(tokens, topic);
 	            logger.debug("토픽 구독 성공: {}", topic);
 	            return true;
-	        } catch (Exception e) {
+	        } catch (FirebaseMessagingException | IOException e) {
 	            logger.error("토픽 구독 실패: {}", topic, e);
 	            return false;
 	        }
@@ -308,7 +309,7 @@ public class FcmSenderUtil {
 		    	instance.firebaseMessaging.unsubscribeFromTopic(tokens, topic);
 		        logger.debug("토픽 구독 취소 성공: {}", topic);
 		        return true;
-		    } catch (Exception e) {
+		    } catch (FirebaseMessagingException | IOException e) {
 		        logger.error("토픽 구독 취소 실패: {}", topic, e);
 		        return false;
 		    }

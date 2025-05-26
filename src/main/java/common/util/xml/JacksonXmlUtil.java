@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -61,7 +62,7 @@ public class JacksonXmlUtil {
 				} else {
 					xmlStr = instance.xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
 				}
-			} catch (Exception e) {
+			} catch (JsonProcessingException e) {
 				logger.error("", e);
 			}
 
@@ -87,7 +88,7 @@ public class JacksonXmlUtil {
 				getInstance();
 				Object result = instance.xmlMapper.readValue(xmlStr, clazz);
 				return clazz.cast(result);
-			} catch (Exception e) {
+			} catch (JsonProcessingException e) {
 				logger.error("", e);
 			}
 
@@ -107,7 +108,7 @@ public class JacksonXmlUtil {
 				getInstance();
 				Object result = instance.xmlMapper.readValue(is, clazz);
 				return clazz.cast(result);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				logger.error("", e);
 			}
 
