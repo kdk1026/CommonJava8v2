@@ -28,6 +28,7 @@ import com.google.firebase.messaging.Notification;
  * 2025. 5. 17. kdk	최초작성
  * </pre>
  *
+ * firebase-admin 기반
  *
  * @author kdk
  */
@@ -72,9 +73,9 @@ public class FcmSenderUtil {
 		}
     }
 
-	private boolean sendPush(String token, String title, String body, String imageUrl, Map<String, String> data) {
-		if ( StringUtils.isBlank(token) ) {
-			throw new IllegalArgumentException("token is null");
+	private boolean sendPush(String deviceToken, String title, String body, String imageUrl, Map<String, String> data) {
+		if ( StringUtils.isBlank(deviceToken) ) {
+			throw new IllegalArgumentException("deviceToken is null");
 		}
 
 		if ( StringUtils.isBlank(title) ) {
@@ -86,7 +87,7 @@ public class FcmSenderUtil {
 		}
 
 		Message message = Message.builder()
-				.setToken(token)
+				.setToken(deviceToken)
 				.setNotification(Notification.builder()
 						.setTitle(title)
 						.setBody(body)
@@ -105,13 +106,13 @@ public class FcmSenderUtil {
 		}
 	}
 
-	private boolean sendPushEach(List<String> tokens, String title, String body, String imageUrl, Map<String, String> data) {
-		if ( tokens == null || tokens.isEmpty() ) {
-			throw new IllegalArgumentException("tokens is null");
+	private boolean sendPushEach(List<String> deviceTokens, String title, String body, String imageUrl, Map<String, String> data) {
+		if ( deviceTokens == null || deviceTokens.isEmpty() ) {
+			throw new IllegalArgumentException("deviceTokens is null");
 		}
 
-		if ( tokens.size() > 500 ) {
-			throw new IllegalArgumentException("tokens size is over 500");
+		if ( deviceTokens.size() > 500 ) {
+			throw new IllegalArgumentException("deviceTokens size is over 500");
 		}
 
 		if ( StringUtils.isBlank(title) ) {
@@ -124,9 +125,9 @@ public class FcmSenderUtil {
 
 		List<Message> messages = new ArrayList<>();
 
-		for (String token : tokens) {
+		for (String deviceToken : deviceTokens) {
 			Message message = Message.builder()
-					.setToken(token)
+					.setToken(deviceToken)
 					.setNotification(Notification.builder()
 							.setTitle(title)
 							.setBody(body)
@@ -140,7 +141,8 @@ public class FcmSenderUtil {
 
 		try {
 			BatchResponse response = firebaseMessaging.sendEach(messages);
-			logger.debug("푸시 알림 전송 성공: {}", response.getSuccessCount());
+			logger.debug("푸시 알림 전송 성공 개수: {}", response.getSuccessCount());
+			logger.debug("푸시 알림 전송 실패 개수: {}", response.getFailureCount());
 			return true;
 		} catch (FirebaseMessagingException e) {
 			logger.error("푸시 알림 전송 실패", e);
@@ -191,32 +193,32 @@ public class FcmSenderUtil {
 			super();
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String deviceToken, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPush(token, title, body, null, null);
+			return instance.sendPush(deviceToken, title, body, null, null);
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body, Map<String, String> data) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String deviceToken, String title, String body, Map<String, String> data) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPush(token, title, body, null, data);
+			return instance.sendPush(deviceToken, title, body, null, data);
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body, String imageUrl) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String deviceToken, String title, String body, String imageUrl) throws IOException {
 			if ( StringUtils.isBlank(imageUrl) ) {
 				throw new IllegalArgumentException("imageUrl is null");
 			}
 
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPush(token, title, body, imageUrl, null);
+			return instance.sendPush(deviceToken, title, body, imageUrl, null);
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String token, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, String deviceToken, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
 			if ( StringUtils.isBlank(imageUrl) ) {
 				throw new IllegalArgumentException("imageUrl is null");
 			}
 
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPush(token, title, body, imageUrl, data);
+			return instance.sendPush(deviceToken, title, body, imageUrl, data);
 		}
 	}
 
@@ -232,32 +234,32 @@ public class FcmSenderUtil {
 			super();
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> deviceTokens, String title, String body) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPushEach(tokens, title, body, null, null);
+			return instance.sendPushEach(deviceTokens, title, body, null, null);
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body, Map<String, String> data) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> deviceTokens, String title, String body, Map<String, String> data) throws IOException {
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPushEach(tokens, title, body, null, data);
+			return instance.sendPushEach(deviceTokens, title, body, null, data);
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body, String imageUrl) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> deviceTokens, String title, String body, String imageUrl) throws IOException {
 			if ( StringUtils.isBlank(imageUrl) ) {
 				throw new IllegalArgumentException("imageUrl is null");
 			}
 
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPushEach(tokens, title, body, imageUrl, null);
+			return instance.sendPushEach(deviceTokens, title, body, imageUrl, null);
 		}
 
-		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> tokens, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
+		public static boolean sendPushNotification(String serviceAccountKeyJsonPath, List<String> deviceTokens, String title, String body, String imageUrl, Map<String, String> data) throws IOException {
 			if ( StringUtils.isBlank(imageUrl) ) {
 				throw new IllegalArgumentException("imageUrl is null");
 			}
 
 			getInstance(serviceAccountKeyJsonPath);
-			return instance.sendPushEach(tokens, title, body, imageUrl, data);
+			return instance.sendPushEach(deviceTokens, title, body, imageUrl, data);
 		}
 	}
 
@@ -275,9 +277,9 @@ public class FcmSenderUtil {
 			super();
 		}
 
-		public static boolean subscribeToTopic(String serviceAccountKeyJsonPath, List<String> tokens, String topic) {
-			if ( tokens == null || tokens.isEmpty() ) {
-				throw new IllegalArgumentException("tokens is null");
+		public static boolean subscribeToTopic(String serviceAccountKeyJsonPath, List<String> deviceTokens, String topic) {
+			if ( deviceTokens == null || deviceTokens.isEmpty() ) {
+				throw new IllegalArgumentException("deviceTokens is null");
 			}
 
 			if ( StringUtils.isBlank(topic) ) {
@@ -286,7 +288,7 @@ public class FcmSenderUtil {
 
 	        try {
 	        	getInstance(serviceAccountKeyJsonPath);
-	        	instance.firebaseMessaging.subscribeToTopic(tokens, topic);
+	        	instance.firebaseMessaging.subscribeToTopic(deviceTokens, topic);
 	            logger.debug("토픽 구독 성공: {}", topic);
 	            return true;
 	        } catch (FirebaseMessagingException | IOException e) {
@@ -295,9 +297,9 @@ public class FcmSenderUtil {
 	        }
 	    }
 
-		public static boolean unsubscribeFromTopic(String serviceAccountKeyJsonPath, List<String> tokens, String topic) {
-			if ( tokens == null || tokens.isEmpty() ) {
-				throw new IllegalArgumentException("tokens is null");
+		public static boolean unsubscribeFromTopic(String serviceAccountKeyJsonPath, List<String> deviceTokens, String topic) {
+			if ( deviceTokens == null || deviceTokens.isEmpty() ) {
+				throw new IllegalArgumentException("deviceTokens is null");
 			}
 
 			if ( StringUtils.isBlank(topic) ) {
@@ -306,7 +308,7 @@ public class FcmSenderUtil {
 
 		    try {
 		    	getInstance(serviceAccountKeyJsonPath);
-		    	instance.firebaseMessaging.unsubscribeFromTopic(tokens, topic);
+		    	instance.firebaseMessaging.unsubscribeFromTopic(deviceTokens, topic);
 		        logger.debug("토픽 구독 취소 성공: {}", topic);
 		        return true;
 		    } catch (FirebaseMessagingException | IOException e) {
