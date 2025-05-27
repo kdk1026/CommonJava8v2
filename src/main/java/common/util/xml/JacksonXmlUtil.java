@@ -17,7 +17,8 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
  * -----------------------------------
  * 개정이력
  * -----------------------------------
- * 2025. 5. 19. kdk	최초작성
+ * 2025. 5. 19. kdk	 최초작성
+ * 2025. 5. 27  김대광 제미나이에 의한 코드 개선
  * </pre>
  *
  *
@@ -25,19 +26,18 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
  */
 public class JacksonXmlUtil {
 
+	private static final Logger logger = LoggerFactory.getLogger(JacksonXmlUtil.class);
+
 	private JacksonXmlUtil() {
 		super();
 	}
 
 	private static JacksonXmlUtil instance;
-    private XmlMapper xmlMapper;
-
-	private static final Logger logger = LoggerFactory.getLogger(JacksonXmlUtil.class);
+    private static final XmlMapper XML_MAPPER = new XmlMapper();
 
 	private static synchronized JacksonXmlUtil getInstance() {
         if (instance == null) {
 			instance = new JacksonXmlUtil();
-			instance.xmlMapper = new XmlMapper();
         }
 
         return instance;
@@ -58,9 +58,9 @@ public class JacksonXmlUtil {
 			try {
 				getInstance();
 				if (!isPretty) {
-					xmlStr = instance.xmlMapper.writeValueAsString(obj);
+					xmlStr = XML_MAPPER.writeValueAsString(obj);
 				} else {
-					xmlStr = instance.xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+					xmlStr = XML_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
 				}
 			} catch (JsonProcessingException e) {
 				logger.error("", e);
@@ -86,7 +86,7 @@ public class JacksonXmlUtil {
 
 			try {
 				getInstance();
-				Object result = instance.xmlMapper.readValue(xmlStr, clazz);
+				Object result = XML_MAPPER.readValue(xmlStr, clazz);
 				return clazz.cast(result);
 			} catch (JsonProcessingException e) {
 				logger.error("", e);
@@ -106,7 +106,7 @@ public class JacksonXmlUtil {
 
 			try {
 				getInstance();
-				Object result = instance.xmlMapper.readValue(is, clazz);
+				Object result = XML_MAPPER.readValue(is, clazz);
 				return clazz.cast(result);
 			} catch (IOException e) {
 				logger.error("", e);
@@ -134,7 +134,7 @@ public class JacksonXmlUtil {
 
 		    try {
 		    	getInstance();
-		        obj = instance.xmlMapper.readValue(file, typeReference);
+		        obj = XML_MAPPER.readValue(file, typeReference);
 		    } catch (IOException e) {
 		        logger.error("", e);
 		    }
@@ -155,7 +155,7 @@ public class JacksonXmlUtil {
 
 			try {
 				getInstance();
-				obj = instance.xmlMapper.readValue(new File(fileName), typeReference);
+				obj = XML_MAPPER.readValue(new File(fileName), typeReference);
 			} catch (IOException e) {
 				logger.error("", e);
 			}
