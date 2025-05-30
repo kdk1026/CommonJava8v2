@@ -295,29 +295,31 @@ public class ApnsSenderUtil {
     /**
      * 중요: 애플리케이션 종료 시 한 번만 shutdown()을 호출
      */
-    public void shutdown() {
+    public static void shutdown() {
     	logger.info("Shutting down ApnsSenderUtil resources...");
 
-        executorService.shutdown();
-        try {
-        	if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                logger.warn("Executor service did not terminate in 60 seconds, forcing shutdown.");
-                executorService.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-        	logger.error("Executor service termination interrupted.", e);
-            executorService.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
+    	if ( instance != null ) {
+    		instance.executorService.shutdown();
+    		try {
+    			if (!instance.executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+    				logger.warn("Executor service did not terminate in 60 seconds, forcing shutdown.");
+    				instance.executorService.shutdownNow();
+    			}
+    		} catch (InterruptedException e) {
+    			logger.error("Executor service termination interrupted.", e);
+    			instance.executorService.shutdownNow();
+    			Thread.currentThread().interrupt();
+    		}
 
-        if (httpClient != null) {
-            try {
-                httpClient.close();
-                logger.info("Apache HttpClient closed.");
-            } catch (IOException e) {
-                logger.error("Error closing Apache HttpClient: {}", e.getMessage(), e);
-            }
-        }
+    		if ( instance.httpClient != null ) {
+    			try {
+    				instance.httpClient.close();
+    				logger.info("Apache HttpClient closed.");
+    			} catch (IOException e) {
+    				logger.error("Error closing Apache HttpClient: {}", e.getMessage(), e);
+    			}
+    		}
+    	}
 
         instance = null;
         logger.info("ApnsSenderUtil shutdown complete.");
