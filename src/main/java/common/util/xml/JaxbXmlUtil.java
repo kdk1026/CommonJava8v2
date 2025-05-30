@@ -37,6 +37,8 @@ public class JaxbXmlUtil {
 
 	private static final Map<Class<?>, JAXBContext> contextCache = new ConcurrentHashMap<>();
 
+	private static final String JAXB_IS_NULL = "JAXBContext is null for class: ";
+
     /**
      * 지정된 클래스에 대한 JAXBContext를 가져오거나 생성하여 캐싱합니다.
      * @param clazz
@@ -79,6 +81,10 @@ public class JaxbXmlUtil {
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(obj.getClass());
+				if ( jaxbContext == null ) {
+					throw new JAXBException(JAXB_IS_NULL + obj.getClass().getName());
+				}
+
 				Marshaller marshaller = jaxbContext.createMarshaller();
 				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isPretty);
 
@@ -110,6 +116,10 @@ public class JaxbXmlUtil {
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
+				if ( jaxbContext == null ) {
+					throw new JAXBException(JAXB_IS_NULL + clazz.getName());
+				}
+
 				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 				return (T) unmarshaller.unmarshal(is);
 			} catch (JAXBException e) {
@@ -137,6 +147,10 @@ public class JaxbXmlUtil {
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
+				if ( jaxbContext == null ) {
+					throw new JAXBException(JAXB_IS_NULL + clazz.getName());
+				}
+
 				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 				return (T) unmarshaller.unmarshal(file);
 			} catch (JAXBException e) {
@@ -158,6 +172,10 @@ public class JaxbXmlUtil {
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
+				if ( jaxbContext == null ) {
+					throw new JAXBException(JAXB_IS_NULL + clazz.getName());
+				}
+
 				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 				return (T) unmarshaller.unmarshal(new File(fileName));
 			} catch (JAXBException e) {

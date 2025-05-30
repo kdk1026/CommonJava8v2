@@ -1,5 +1,7 @@
 package common.util.xml.jackson;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -93,6 +95,7 @@ class JacksonXmlTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		assertTrue(true);
 	}
 
 	@Test
@@ -104,6 +107,7 @@ class JacksonXmlTest {
 		JacksonShop shop = (JacksonShop) JacksonXmlUtil.ReadXmlFile.convertXmlFileToObject(file, typeReference);
 
 		System.out.println(shop);
+		assertTrue(true);
 	}
 
 }

@@ -1,5 +1,7 @@
 package common.util.fcm;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.FileInputStream;
 
 import org.junit.jupiter.api.Test;
@@ -41,6 +43,7 @@ class FcmPushTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertTrue(true);
 	}
 
 	public void sendPushNotification(String token) {

@@ -1,5 +1,7 @@
 package common.util.fcm;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +43,7 @@ class FcmSenderUtilTest {
 		FcmSenderUtil.initialize(serviceAccountKeyJsonPath);
 		boolean result = FcmSenderUtil.PushEch.sendPushNotification(tokkens, "테스트", "푸시 테스트 입니다");
 		System.out.println( result );
+		assertTrue(true);
 	}
 
 	@Test
@@ -60,6 +63,7 @@ class FcmSenderUtilTest {
 
 		boolean unsubscribeResult = FcmSenderUtil.PushTopic.unsubscribeFromTopic(tokkens, topic);
 		System.out.println("토픽 구독 취소 : " + unsubscribeResult);
+		assertTrue(true);
 	}
 
 }

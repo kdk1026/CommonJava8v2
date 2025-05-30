@@ -173,7 +173,7 @@ public class ApnsSenderUtil {
     private synchronized void generateAndSetJwtToken() {
     	// JWT 유효기간은 1시간을 넘을 수 없습니다. 보통 50분 정도로 설정합니다.
     	Instant now = Instant.now();
-    	long secondsToAdd = 60 * 50;
+    	long secondsToAdd = 60L * 50;
         Instant expiry = now.plusSeconds(secondsToAdd); // 50분 후 만료
 
         this.jwtToken = Jwts.builder()
