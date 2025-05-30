@@ -1,6 +1,7 @@
 package common.util.fcm;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class FcmSenderUtilTest {
 		String serviceAccountKeyJsonPath = "d:/test/webpushtest-6bb7d-firebase-adminsdk-6qup9-58a2645a0a.json";
 		String token = "dHkWFfuRRCxg0tsbgg3RqR:APA91bGkuTJEGcq7BcVC5OEt_A7VbY9g_yFf_UUjRCBwHnVPdaartFVegwKMLqX8H_7P94ItEAqzeR9AcvV_6tQh7RuqtcjKHCkI-wAS1Yk1lfoB9cigU4U";
 
-		List<String> tokkens = List.of(token);
+		List<String> tokkens = Arrays.asList(token);
 
 		FcmSenderUtil.initialize(serviceAccountKeyJsonPath);
 		boolean result = FcmSenderUtil.PushEch.sendPushNotification(tokkens, "테스트", "푸시 테스트 입니다");
@@ -48,7 +49,7 @@ class FcmSenderUtilTest {
 		String token = "dHkWFfuRRCxg0tsbgg3RqR:APA91bGkuTJEGcq7BcVC5OEt_A7VbY9g_yFf_UUjRCBwHnVPdaartFVegwKMLqX8H_7P94ItEAqzeR9AcvV_6tQh7RuqtcjKHCkI-wAS1Yk1lfoB9cigU4U";
 		String topic = "test_topic";
 
-		List<String> tokkens = List.of(token);
+		List<String> tokkens = Arrays.asList(token);
 		FcmSenderUtil.initialize(serviceAccountKeyJsonPath);
 
 		boolean subscribeResult = FcmSenderUtil.PushTopic.subscribeToTopic(tokkens, topic);
