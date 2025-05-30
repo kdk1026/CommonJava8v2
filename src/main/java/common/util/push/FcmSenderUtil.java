@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -41,12 +42,15 @@ public class FcmSenderUtil {
 		super();
 	}
 
+	private static final String TITLE_NULL_ERROR = "title는 null일 수 없습니다.";
+	private static final String BODY_NULL_ERROR = "body는 null일 수 없습니다.";
+	private static final String TOPIC_NULL_ERROR = "topic는 null일 수 없습니다.";
+	private static final String IMAGE_URL_NULL_ERROR = "imageUrl는 null일 수 없습니다.";
+
     private static FirebaseMessaging firebaseMessaging;
 
     public static synchronized void initialize(String serviceAccountKeyJsonPath) throws IOException {
-    	if (StringUtils.isBlank(serviceAccountKeyJsonPath)) {
-            throw new IllegalArgumentException("serviceAccountKeyJsonPath는 null이거나 비어있을 수 없습니다.");
-        }
+		Objects.requireNonNull(serviceAccountKeyJsonPath.trim(), "serviceAccountKeyJsonPath는 null일 수 없습니다.");
 
     	if (firebaseMessaging != null) {
             logger.warn("Firebase Messaging이 이미 초기화되었습니다. 추가 초기화 시도는 무시됩니다.");
@@ -96,17 +100,9 @@ public class FcmSenderUtil {
 		}
 
 		private static boolean sendPush(String deviceToken, String title, String body, String imageUrl, Map<String, String> data) {
-			if ( StringUtils.isBlank(deviceToken) ) {
-				throw new IllegalArgumentException("deviceToken is null");
-			}
-
-			if ( StringUtils.isBlank(title) ) {
-				throw new IllegalArgumentException("title is null");
-			}
-
-			if ( StringUtils.isBlank(body) ) {
-				throw new IllegalArgumentException("body is null");
-			}
+			Objects.requireNonNull(deviceToken.trim(), "deviceToken는 null일 수 없습니다.");
+			Objects.requireNonNull(title.trim(), TITLE_NULL_ERROR);
+			Objects.requireNonNull(body.trim(), BODY_NULL_ERROR);
 
 			Message message = Message.builder()
 					.setToken(deviceToken)
@@ -137,17 +133,13 @@ public class FcmSenderUtil {
 		}
 
 		public static boolean sendPushNotification(String deviceToken, String title, String body, String imageUrl) {
-			if ( StringUtils.isBlank(imageUrl) ) {
-				throw new IllegalArgumentException("imageUrl is null");
-			}
+			Objects.requireNonNull(imageUrl.trim(), IMAGE_URL_NULL_ERROR);
 
 			return sendPush(deviceToken, title, body, imageUrl, null);
 		}
 
 		public static boolean sendPushNotification(String deviceToken, String title, String body, String imageUrl, Map<String, String> data) {
-			if ( StringUtils.isBlank(imageUrl) ) {
-				throw new IllegalArgumentException("imageUrl is null");
-			}
+			Objects.requireNonNull(imageUrl.trim(), IMAGE_URL_NULL_ERROR);
 
 			return sendPush(deviceToken, title, body, imageUrl, data);
 		}
@@ -174,13 +166,8 @@ public class FcmSenderUtil {
 				throw new IllegalArgumentException("deviceTokens size is over 500");
 			}
 
-			if ( StringUtils.isBlank(title) ) {
-				throw new IllegalArgumentException("title is null");
-			}
-
-			if ( StringUtils.isBlank(body) ) {
-				throw new IllegalArgumentException("body is null");
-			}
+			Objects.requireNonNull(title.trim(), TITLE_NULL_ERROR);
+			Objects.requireNonNull(body.trim(), BODY_NULL_ERROR);
 
 			List<Message> messages = new ArrayList<>();
 
@@ -218,17 +205,13 @@ public class FcmSenderUtil {
 		}
 
 		public static boolean sendPushNotification(List<String> deviceTokens, String title, String body, String imageUrl) {
-			if ( StringUtils.isBlank(imageUrl) ) {
-				throw new IllegalArgumentException("imageUrl is null");
-			}
+			Objects.requireNonNull(imageUrl.trim(), IMAGE_URL_NULL_ERROR);
 
 			return sendPushEach(deviceTokens, title, body, imageUrl, null);
 		}
 
 		public static boolean sendPushNotification(List<String> deviceTokens, String title, String body, String imageUrl, Map<String, String> data) {
-			if ( StringUtils.isBlank(imageUrl) ) {
-				throw new IllegalArgumentException("imageUrl is null");
-			}
+			Objects.requireNonNull(imageUrl.trim(), IMAGE_URL_NULL_ERROR);
 
 			return sendPushEach(deviceTokens, title, body, imageUrl, data);
 		}
@@ -253,9 +236,7 @@ public class FcmSenderUtil {
 				throw new IllegalArgumentException("deviceTokens is null");
 			}
 
-			if ( StringUtils.isBlank(topic) ) {
-				throw new IllegalArgumentException("topic is null");
-			}
+			Objects.requireNonNull(topic.trim(), TOPIC_NULL_ERROR);
 
 	        try {
 	        	getFirebaseMessagingInstance().subscribeToTopic(deviceTokens, topic);
@@ -272,9 +253,7 @@ public class FcmSenderUtil {
 				throw new IllegalArgumentException("deviceTokens is null");
 			}
 
-			if ( StringUtils.isBlank(topic) ) {
-				throw new IllegalArgumentException("topic is null");
-			}
+			Objects.requireNonNull(topic.trim(), TOPIC_NULL_ERROR);
 
 		    try {
 		    	getFirebaseMessagingInstance().unsubscribeFromTopic(deviceTokens, topic);
@@ -287,17 +266,9 @@ public class FcmSenderUtil {
 		}
 
 		private static boolean sendTopicMessage(String topic, String title, String body, String imageUrl, Map<String, String> data) {
-			if ( StringUtils.isBlank(topic) ) {
-				throw new IllegalArgumentException("topic is null");
-			}
-
-			if ( StringUtils.isBlank(title) ) {
-				throw new IllegalArgumentException("title is null");
-			}
-
-			if ( StringUtils.isBlank(body) ) {
-				throw new IllegalArgumentException("body is null");
-			}
+			Objects.requireNonNull(topic.trim(), TOPIC_NULL_ERROR);
+			Objects.requireNonNull(title.trim(), TITLE_NULL_ERROR);
+			Objects.requireNonNull(body.trim(), BODY_NULL_ERROR);
 
 	        Message message = Message.builder()
 	                .setTopic(topic)
@@ -328,17 +299,13 @@ public class FcmSenderUtil {
 		}
 
 		public static boolean sendPushNotification(String topic, String title, String body, String imageUrl) {
-			if ( StringUtils.isBlank(imageUrl) ) {
-				throw new IllegalArgumentException("imageUrl is null");
-			}
+			Objects.requireNonNull(imageUrl.trim(), IMAGE_URL_NULL_ERROR);
 
 			return sendTopicMessage(topic, title, body, imageUrl, null);
 		}
 
 		public static boolean sendPushNotification(String topic, String title, String body, String imageUrl, Map<String, String> data) {
-			if ( StringUtils.isBlank(imageUrl) ) {
-				throw new IllegalArgumentException("imageUrl is null");
-			}
+			Objects.requireNonNull(imageUrl.trim(), IMAGE_URL_NULL_ERROR);
 
 			return sendTopicMessage(topic, title, body, imageUrl, data);
 		}

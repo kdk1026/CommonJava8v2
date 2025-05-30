@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,9 +75,7 @@ public class JaxbXmlUtil {
 		}
 
 		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
-			if ( obj == null ) {
-				throw new IllegalArgumentException("obj is null");
-			}
+			Objects.requireNonNull(obj, "obj must not be null");
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(obj.getClass());
@@ -106,13 +104,8 @@ public class JaxbXmlUtil {
 
 		@SuppressWarnings("unchecked")
 		public static <T> T converterXmlStreamToClass(InputStream is, Class<T> clazz) {
-			if ( is == null ) {
-				throw new IllegalArgumentException("is is null");
-			}
-
-			if ( clazz == null ) {
-				throw new IllegalArgumentException("clazz is null");
-			}
+			Objects.requireNonNull(is, "InputStream must not be null");
+			Objects.requireNonNull(clazz, "Class must not be null");
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
@@ -137,13 +130,8 @@ public class JaxbXmlUtil {
 
 		@SuppressWarnings("unchecked")
 		public static <T> T convertXmlFileToObject(File file, Class<T> clazz) {
-			if ( file == null ) {
-				throw new IllegalArgumentException("file is null");
-			}
-
-			if ( clazz == null ) {
-				throw new IllegalArgumentException("clazz is null");
-			}
+			Objects.requireNonNull(file, "file must not be null");
+			Objects.requireNonNull(clazz, "clazz must not be null");
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
@@ -162,13 +150,8 @@ public class JaxbXmlUtil {
 
 		@SuppressWarnings("unchecked")
 		public static <T> T convertXmlFileToObject(String fileName, Class<T> clazz) {
-			if ( StringUtils.isBlank(fileName) ) {
-				throw new IllegalArgumentException("fileName is null");
-			}
-
-			if ( clazz == null ) {
-				throw new IllegalArgumentException("clazz is null");
-			}
+			Objects.requireNonNull(fileName.trim(), "fileName must not be null");
+			Objects.requireNonNull(clazz, "clazz must not be null");
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);

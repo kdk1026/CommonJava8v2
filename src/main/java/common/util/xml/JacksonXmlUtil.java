@@ -3,8 +3,8 @@ package common.util.xml;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,9 +49,7 @@ public class JacksonXmlUtil {
 		}
 
 		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
-			if ( obj == null ) {
-				throw new IllegalArgumentException("obj is null");
-			}
+			Objects.requireNonNull(obj, "obj is null");
 
 			String xmlStr = "";
 
@@ -76,13 +74,8 @@ public class JacksonXmlUtil {
 		}
 
 		public static <T> T converterXmlStrToClass(String xmlStr, Class<T> clazz) {
-			if ( StringUtils.isBlank(xmlStr) ) {
-				throw new IllegalArgumentException("xmlStr is null");
-			}
-
-			if ( clazz == null ) {
-				throw new IllegalArgumentException("clazz is null");
-			}
+			Objects.requireNonNull(xmlStr.trim(), "xmlStr is null");
+			Objects.requireNonNull(clazz, "clazz is null");
 
 			try {
 				getInstance();
@@ -96,13 +89,8 @@ public class JacksonXmlUtil {
 		}
 
 		public static <T> T converterXmlStreamToClass(InputStream is, Class<T> clazz) {
-			if ( is == null ) {
-				throw new IllegalArgumentException("is is null");
-			}
-
-			if ( clazz == null ) {
-				throw new IllegalArgumentException("clazz is null");
-			}
+			Objects.requireNonNull(is, "is is null");
+			Objects.requireNonNull(clazz, "clazz is null");
 
 			try {
 				getInstance();
@@ -122,13 +110,8 @@ public class JacksonXmlUtil {
 		}
 
 		public static Object convertXmlFileToObject(File file, TypeReference<?> typeReference) {
-			if ( file == null ) {
-				throw new IllegalArgumentException("file is null");
-			}
-
-		    if (typeReference == null) {
-		        throw new IllegalArgumentException("typeReference is null");
-		    }
+			Objects.requireNonNull(file, "file is null");
+			Objects.requireNonNull(typeReference, "typeReference is null");
 
 		    Object obj = null;
 
@@ -143,13 +126,8 @@ public class JacksonXmlUtil {
 		}
 
 		public static Object convertXmlFileToObject(String fileName, TypeReference<?> typeReference) {
-			if ( StringUtils.isBlank(fileName) ) {
-				throw new IllegalArgumentException("fileName is null");
-			}
-
-			if (typeReference == null) {
-				throw new IllegalArgumentException("typeReference is null");
-			}
+			Objects.requireNonNull(fileName.trim(), "fileName is null");
+			Objects.requireNonNull(typeReference, "typeReference is null");
 
 			Object obj = null;
 
