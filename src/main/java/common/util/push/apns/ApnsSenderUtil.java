@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -99,10 +98,21 @@ public class ApnsSenderUtil {
     private static final int THREAD_POOL_SIZE = 10; // 예시: 10개 스레드
 
 	private static synchronized ApnsSenderUtil getInstance(String p8FilePath, String keyId, String teamId, String bundleId) throws IOException {
-		Objects.requireNonNull(p8FilePath.trim(), "p8FilePath cannot be null");
-		Objects.requireNonNull(keyId.trim(), "keyId cannot be null");
-		Objects.requireNonNull(teamId.trim(), "teamId cannot be null");
-		Objects.requireNonNull(bundleId.trim(), "bundleId cannot be null");
+		if ( StringUtils.isBlank(p8FilePath) ) {
+			throw new IllegalArgumentException("p8FilePath cannot be null or empty");
+		}
+
+		if ( StringUtils.isBlank(keyId) ) {
+			throw new IllegalArgumentException("keyId cannot be null or empty");
+		}
+
+		if ( StringUtils.isBlank(teamId) ) {
+			throw new IllegalArgumentException("teamId cannot be null or empty");
+		}
+
+		if ( StringUtils.isBlank(bundleId) ) {
+			throw new IllegalArgumentException("bundleId cannot be null or empty");
+		}
 
         if (instance == null) {
 			instance = new ApnsSenderUtil();

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,7 +151,10 @@ public class JaxbXmlUtil {
 
 		@SuppressWarnings("unchecked")
 		public static <T> T convertXmlFileToObject(String fileName, Class<T> clazz) {
-			Objects.requireNonNull(fileName.trim(), "fileName must not be null");
+			if ( StringUtils.isBlank(fileName) ) {
+				throw new IllegalArgumentException("fileName is null");
+			}
+
 			Objects.requireNonNull(clazz, "clazz must not be null");
 
 			try {

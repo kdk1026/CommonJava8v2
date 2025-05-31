@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,7 +75,10 @@ public class JacksonXmlUtil {
 		}
 
 		public static <T> T converterXmlStrToClass(String xmlStr, Class<T> clazz) {
-			Objects.requireNonNull(xmlStr.trim(), "xmlStr is null");
+			if ( StringUtils.isBlank(xmlStr) ) {
+				throw new IllegalArgumentException("xmlStr is null");
+			}
+
 			Objects.requireNonNull(clazz, "clazz is null");
 
 			try {
@@ -126,7 +130,10 @@ public class JacksonXmlUtil {
 		}
 
 		public static Object convertXmlFileToObject(String fileName, TypeReference<?> typeReference) {
-			Objects.requireNonNull(fileName.trim(), "fileName is null");
+			if ( StringUtils.isBlank(fileName) ) {
+				throw new IllegalArgumentException("fileName is null");
+			}
+
 			Objects.requireNonNull(typeReference, "typeReference is null");
 
 			Object obj = null;
