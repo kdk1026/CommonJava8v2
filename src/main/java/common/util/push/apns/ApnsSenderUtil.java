@@ -77,6 +77,14 @@ public class ApnsSenderUtil {
 		super();
 	}
 
+	private static class ExceptionMessage {
+
+		public static String isNullOrEmpty(String paramName) {
+	        return String.format("'%s' is null or empty", paramName);
+	    }
+
+	}
+
 	private static final String APNS_DEVELOPMENT_URL = "https://api.development.push.apple.com";
     private static final String APNS_PRODUCTION_URL = "https://api.push.apple.com";
 
@@ -99,19 +107,19 @@ public class ApnsSenderUtil {
 
 	private static synchronized ApnsSenderUtil getInstance(String p8FilePath, String keyId, String teamId, String bundleId) throws IOException {
 		if ( StringUtils.isBlank(p8FilePath) ) {
-			throw new IllegalArgumentException("p8FilePath cannot be null or empty");
+			throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("p8FilePath"));
 		}
 
 		if ( StringUtils.isBlank(keyId) ) {
-			throw new IllegalArgumentException("keyId cannot be null or empty");
+			throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("keyId"));
 		}
 
 		if ( StringUtils.isBlank(teamId) ) {
-			throw new IllegalArgumentException("teamId cannot be null or empty");
+			throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("teamId"));
 		}
 
 		if ( StringUtils.isBlank(bundleId) ) {
-			throw new IllegalArgumentException("bundleId cannot be null or empty");
+			throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("bundleId"));
 		}
 
         if (instance == null) {

@@ -41,10 +41,18 @@ public class FcmSenderUtil {
 		super();
 	}
 
-	private static final String TITLE_NULL_ERROR = "title는 null일 수 없습니다.";
-	private static final String BODY_NULL_ERROR = "body는 null일 수 없습니다.";
-	private static final String TOPIC_NULL_ERROR = "topic는 null일 수 없습니다.";
-	private static final String IMAGE_URL_NULL_ERROR = "imageUrl는 null일 수 없습니다.";
+	private static class ExceptionMessage {
+
+		public static String isNullOrEmpty(String paramName) {
+	        return String.format("'%s' is null or empty", paramName);
+	    }
+
+	}
+
+	private static final String TITLE_NULL_ERROR = ExceptionMessage.isNullOrEmpty("title");
+	private static final String BODY_NULL_ERROR = ExceptionMessage.isNullOrEmpty("body");
+	private static final String TOPIC_NULL_ERROR = ExceptionMessage.isNullOrEmpty("topic");
+	private static final String IMAGE_URL_NULL_ERROR = ExceptionMessage.isNullOrEmpty("imageUrl");
 
     private static FirebaseMessaging firebaseMessaging;
 
@@ -102,7 +110,7 @@ public class FcmSenderUtil {
 
 		private static boolean sendPush(String deviceToken, String title, String body, String imageUrl, Map<String, String> data) {
 			if ( StringUtils.isBlank(deviceToken) ) {
-				throw new IllegalArgumentException("deviceToken는 null일 수 없습니다.");
+				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("deviceToken"));
 			}
 
 			if ( StringUtils.isBlank(title) ) {
@@ -172,7 +180,7 @@ public class FcmSenderUtil {
 
 		private static boolean sendPushEach(List<String> deviceTokens, String title, String body, String imageUrl, Map<String, String> data) {
 			if ( deviceTokens == null || deviceTokens.isEmpty() ) {
-				throw new IllegalArgumentException("deviceTokens is null");
+				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("deviceTokens"));
 			}
 
 			if ( deviceTokens.size() > 500 ) {
@@ -255,7 +263,7 @@ public class FcmSenderUtil {
 
 		public static boolean subscribeToTopic(List<String> deviceTokens, String topic) {
 			if ( deviceTokens == null || deviceTokens.isEmpty() ) {
-				throw new IllegalArgumentException("deviceTokens is null");
+				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("deviceTokens"));
 			}
 
 			if ( StringUtils.isBlank(topic) ) {
@@ -274,7 +282,7 @@ public class FcmSenderUtil {
 
 		public static boolean unsubscribeFromTopic(List<String> deviceTokens, String topic) {
 			if ( deviceTokens == null || deviceTokens.isEmpty() ) {
-				throw new IllegalArgumentException("deviceTokens is null");
+				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("deviceTokens"));
 			}
 
 			if ( StringUtils.isBlank(topic) ) {

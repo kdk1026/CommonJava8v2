@@ -33,6 +33,18 @@ public class JacksonXmlUtil {
 		super();
 	}
 
+	private static class ExceptionMessage {
+
+		public static String isNull(String paramName) {
+	        return String.format("'%s' is null", paramName);
+	    }
+
+		public static String isNullOrEmpty(String paramName) {
+	        return String.format("'%s' is null or empty", paramName);
+	    }
+
+	}
+
 	private static JacksonXmlUtil instance;
     private static final XmlMapper XML_MAPPER = new XmlMapper();
 
@@ -50,7 +62,7 @@ public class JacksonXmlUtil {
 		}
 
 		public static String converterObjToXmlStr(Object obj, boolean isPretty) {
-			Objects.requireNonNull(obj, "obj is null");
+			Objects.requireNonNull(obj, ExceptionMessage.isNull("obj"));
 
 			String xmlStr = "";
 
@@ -76,10 +88,10 @@ public class JacksonXmlUtil {
 
 		public static <T> T converterXmlStrToClass(String xmlStr, Class<T> clazz) {
 			if ( StringUtils.isBlank(xmlStr) ) {
-				throw new IllegalArgumentException("xmlStr is null");
+				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("xmlStr"));
 			}
 
-			Objects.requireNonNull(clazz, "clazz is null");
+			Objects.requireNonNull(clazz, ExceptionMessage.isNull("clazz"));
 
 			try {
 				getInstance();
@@ -93,8 +105,8 @@ public class JacksonXmlUtil {
 		}
 
 		public static <T> T converterXmlStreamToClass(InputStream is, Class<T> clazz) {
-			Objects.requireNonNull(is, "is is null");
-			Objects.requireNonNull(clazz, "clazz is null");
+			Objects.requireNonNull(is, ExceptionMessage.isNull("is"));
+			Objects.requireNonNull(clazz, ExceptionMessage.isNull("clazz"));
 
 			try {
 				getInstance();
@@ -114,8 +126,8 @@ public class JacksonXmlUtil {
 		}
 
 		public static Object convertXmlFileToObject(File file, TypeReference<?> typeReference) {
-			Objects.requireNonNull(file, "file is null");
-			Objects.requireNonNull(typeReference, "typeReference is null");
+			Objects.requireNonNull(file, ExceptionMessage.isNull("file"));
+			Objects.requireNonNull(typeReference, ExceptionMessage.isNull("typeReference"));
 
 		    Object obj = null;
 
@@ -131,10 +143,10 @@ public class JacksonXmlUtil {
 
 		public static Object convertXmlFileToObject(String fileName, TypeReference<?> typeReference) {
 			if ( StringUtils.isBlank(fileName) ) {
-				throw new IllegalArgumentException("fileName is null");
+				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("fileName"));
 			}
 
-			Objects.requireNonNull(typeReference, "typeReference is null");
+			Objects.requireNonNull(typeReference, ExceptionMessage.isNull("typeReference"));
 
 			Object obj = null;
 
