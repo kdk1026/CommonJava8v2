@@ -71,6 +71,9 @@ public class ApnsSenderUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(ApnsSenderUtil.class);
 
+	private static final String APNS_DEVELOPMENT_URL = "https://api.development.push.apple.com";
+    private static final String APNS_PRODUCTION_URL = "https://api.push.apple.com";
+
 	private static ApnsSenderUtil instance;
 
 	private ApnsSenderUtil() {
@@ -84,9 +87,6 @@ public class ApnsSenderUtil {
 	    }
 
 	}
-
-	private static final String APNS_DEVELOPMENT_URL = "https://api.development.push.apple.com";
-    private static final String APNS_PRODUCTION_URL = "https://api.push.apple.com";
 
     private String p8FilePath;
     private String keyId;

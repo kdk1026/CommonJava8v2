@@ -32,6 +32,10 @@ public class JaxbXmlUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(JaxbXmlUtil.class);
 
+	private static final Map<Class<?>, JAXBContext> contextCache = new ConcurrentHashMap<>();
+
+	private static final String CLAZZ = "clazz";
+
 	private JaxbXmlUtil() {
 		super();
 	}
@@ -48,9 +52,7 @@ public class JaxbXmlUtil {
 
 	}
 
-	private static final Map<Class<?>, JAXBContext> contextCache = new ConcurrentHashMap<>();
-
-	private static final String JAXB_IS_NULL = "JAXBContext is null for class: ";
+	private static final String JAXB_IS_NULL = ExceptionMessage.isNull("JAXBContext");
 
     /**
      * 지정된 클래스에 대한 JAXBContext를 가져오거나 생성하여 캐싱합니다.
@@ -118,7 +120,7 @@ public class JaxbXmlUtil {
 		@SuppressWarnings("unchecked")
 		public static <T> T converterXmlStreamToClass(InputStream is, Class<T> clazz) {
 			Objects.requireNonNull(is, ExceptionMessage.isNull("is"));
-			Objects.requireNonNull(clazz, ExceptionMessage.isNull("clazz"));
+			Objects.requireNonNull(clazz, ExceptionMessage.isNull(CLAZZ));
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
@@ -144,7 +146,7 @@ public class JaxbXmlUtil {
 		@SuppressWarnings("unchecked")
 		public static <T> T convertXmlFileToObject(File file, Class<T> clazz) {
 			Objects.requireNonNull(file, ExceptionMessage.isNull("file"));
-			Objects.requireNonNull(clazz, ExceptionMessage.isNull("clazz"));
+			Objects.requireNonNull(clazz, ExceptionMessage.isNull(CLAZZ));
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);
@@ -167,7 +169,7 @@ public class JaxbXmlUtil {
 				throw new IllegalArgumentException(ExceptionMessage.isNullOrEmpty("fileName"));
 			}
 
-			Objects.requireNonNull(clazz, ExceptionMessage.isNull("clazz"));
+			Objects.requireNonNull(clazz, ExceptionMessage.isNull(CLAZZ));
 
 			try {
 				JAXBContext jaxbContext = getCachedJAXBContext(clazz);

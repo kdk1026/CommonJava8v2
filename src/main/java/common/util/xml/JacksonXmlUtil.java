@@ -29,6 +29,8 @@ public class JacksonXmlUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(JacksonXmlUtil.class);
 
+	private static final XmlMapper XML_MAPPER = new XmlMapper();
+
 	private JacksonXmlUtil() {
 		super();
 	}
@@ -46,7 +48,6 @@ public class JacksonXmlUtil {
 	}
 
 	private static JacksonXmlUtil instance;
-    private static final XmlMapper XML_MAPPER = new XmlMapper();
 
 	private static synchronized JacksonXmlUtil getInstance() {
         if (instance == null) {
