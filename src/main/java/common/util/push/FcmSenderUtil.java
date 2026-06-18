@@ -133,7 +133,11 @@ public class FcmSenderUtil {
 
 			try {
 				String response = getFirebaseMessagingInstance().send(message);
-				logger.debug("푸시 알림 전송 성공: {}", response);
+
+				if ( logger.isDebugEnabled() ) {
+					logger.debug("푸시 알림 전송 성공: {}", response);
+				}
+
 				return true;
 			} catch (FirebaseMessagingException e) {
 				logger.error("푸시 알림 전송 실패", e);
@@ -213,8 +217,12 @@ public class FcmSenderUtil {
 
 			try {
 				BatchResponse response = getFirebaseMessagingInstance().sendEach(messages);
-				logger.debug("푸시 알림 전송 성공 개수: {}", response.getSuccessCount());
-				logger.debug("푸시 알림 전송 실패 개수: {}", response.getFailureCount());
+
+				if ( logger.isDebugEnabled() ) {
+					logger.debug("푸시 알림 전송 성공 개수: {}", response.getSuccessCount());
+					logger.debug("푸시 알림 전송 실패 개수: {}", response.getFailureCount());
+				}
+
 				return true;
 			} catch (FirebaseMessagingException e) {
 				logger.error("푸시 알림 전송 실패", e);
@@ -272,7 +280,11 @@ public class FcmSenderUtil {
 
 	        try {
 	        	getFirebaseMessagingInstance().subscribeToTopic(deviceTokens, topic);
-	            logger.debug("토픽 구독 성공: {}", topic);
+
+	        	if ( logger.isDebugEnabled() ) {
+	        		logger.debug("토픽 구독 성공: {}", topic);
+	        	}
+
 	            return true;
 	        } catch (FirebaseMessagingException e) {
 	            logger.error("토픽 구독 실패: {}", topic, e);
@@ -291,7 +303,11 @@ public class FcmSenderUtil {
 
 		    try {
 		    	getFirebaseMessagingInstance().unsubscribeFromTopic(deviceTokens, topic);
-		        logger.debug("토픽 구독 취소 성공: {}", topic);
+
+		    	if ( logger.isDebugEnabled() ) {
+		    		logger.debug("토픽 구독 취소 성공: {}", topic);
+		    	}
+
 		        return true;
 		    } catch (FirebaseMessagingException  e) {
 		        logger.error("토픽 구독 취소 실패: {}", topic, e);
@@ -324,7 +340,11 @@ public class FcmSenderUtil {
 
 	        try {
 	            String response = getFirebaseMessagingInstance().send(message);
-	            logger.info("토픽 메시지 전송 성공: {}", response);
+
+	            if ( logger.isDebugEnabled() ) {
+	            	logger.debug("토픽 메시지 전송 성공: {}", response);
+	            }
+
 	            return true;
 	        } catch (FirebaseMessagingException e) {
 	            logger.error("토픽 메시지 전송 실패", e);
